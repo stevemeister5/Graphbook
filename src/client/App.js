@@ -1,6 +1,8 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 
+import { Helmet } from 'react-helmet';
+
 // Bundling our app with CSS by calling the import statement
 import '../../assets/css/style.css';
 
@@ -57,6 +59,10 @@ export default class App extends Component {
 
     return (
       <div className="container">
+        <Helmet>
+          <title>Graphbook - Feed</title>
+          <meta name="description" content="Newsfeed of all your friends on Graphbook" />
+        </Helmet>
         <div className="postForm">
           <form onSubmit={this.handleSubmit}>
             <textarea value={postContent} onChange={this.handlePostContentChange} placeholder="Write your custom post!"/>
