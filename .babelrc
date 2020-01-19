@@ -5,7 +5,7 @@
         "@babel/plugin-proposal-export-namespace-from",
         "@babel/plugin-proposal-numeric-separator",
         "@babel/plugin-proposal-throw-expressions",
-        ["@bable/plugin-proposal-class-properties", { "loose": false }]
+        ["@babel/plugin-proposal-class-properties", { "loose": false }]
     ],
-    "presets": ["@bable/env", "@babel/react"]
+    "presets": ["@babel/env", "@babel/react"]
 }
