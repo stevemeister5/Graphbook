@@ -11,3 +11,5 @@ const sequelize = new Sequelize('graphbook_dev', 'devuser', '@Imight123', {
         idle: 10000,
     },
 });
+
+export default sequelize;
