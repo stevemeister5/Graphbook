@@ -12,31 +12,31 @@ const app = express();
 
 const root = path.join(__dirname, '../../');
 
-// Compression setup
-app.use(compress());
 
+// Check if Environment is in development
+if (process.env.NODE_ENV === 'production') {
+  app.use(helmet());
+  app.use(helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "*.amazonaws.com"]
+    }
+  }));
+  // Compression setup
+  app.use(compress());
+  // CORS setup
+  app.use(cors());
+
+}
 // Helmet Middleware setup
-app.use(helmet());
-app.use(helmet.contentSecurityPolicy({
-  directives: {
-    defaultSrc: ["'self'"],
-    scriptSrc: ["'self'", "'unsafe-inline'"],
-    styleSrc: ["'self'", "'unsafe-inline'"],
-    imgSrc: ["'self'", "data:", "*.amazonaws.com"]
-  }
-}));
 
-// CORS setup
-app.use(cors());
 
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
-
-
 app.use('/', express.static(path.join(root, 'dist/client')));
 app.use('/uploads', express.static(path.join(root, 'uploads')));
-app.get('/', (req, res) => {
-  res.sendFile(path.join(root, 'dist/client/index.html'));
-});
+
 
 // Binding Graphql to express web server
 const serviceNames = Object.keys(services);
@@ -49,5 +49,9 @@ for (let i = 0; i < serviceNames.length; i += 1) {
     app.use(`/${name}`, services[name]);
   }
 }
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(root, 'dist/client/index.html'));
+});
 
 app.listen(8000, () => console.log('Listening on port 8000!'));

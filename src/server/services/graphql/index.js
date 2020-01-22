@@ -13,7 +13,7 @@ const executableSchema = makeExecutableSchema({
 
 const server = new ApolloServer({
     schema: executableSchema,
-    context: ({ req }) => req
+    context: ({ req }) => req,
 });
 
 export default server;
